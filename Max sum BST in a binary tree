@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+    
+    struct subtree{
+        bool isBST; 
+        int minn; 
+        int maxx; 
+        int sum; 
+    };
+
+    struct subtree traverse(TreeNode* root, int &ans){
+        if(!root) return {true, INT_MAX, INT_MIN, 0};
+        
+
+        subtree lst = traverse(root->left, ans); //recurse left
+        subtree rst = traverse(root->right, ans); //recurse right
+
+       
+        bool flag = true; 
+        int minval = min({root->val, lst.minn, rst.minn});
+        int maxval = max({root->val, lst.maxx, rst.maxx});
+        int subtreeSum = root->val + lst.sum + rst.sum;
+
+    e
+        if(root->val <= lst.maxx || root->val >= rst.minn)
+            flag = false;
+        
+        
+        if(flag && lst.isBST && rst.isBST)
+            ans = max(ans, subtreeSum);
+
+        return {flag, minval, maxval, subtreeSum};
+    }
+
+    int maxSumBST(TreeNode* root) {
+        int ans = 0;
+        traverse(root, ans);
+        return ans;
+        
+    }
+};
