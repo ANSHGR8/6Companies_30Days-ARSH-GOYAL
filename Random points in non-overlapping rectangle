@@ -1,0 +1,50 @@
+class Solution {
+public:
+    Solution(vector<vector<int>>& rects) {
+         rects_ = rects;
+        total_points_ = 0;
+        
+        for (const auto& rect : rects) {
+            // Calculate the number of points in each rectangle
+            total_points_ += (rect[2] - rect[0] + 1) * (rect[3] - rect[1] + 1);
+            cumulative_points_.push_back(total_points_);
+        }
+    }
+    
+    
+    
+    vector<int> pick() {
+        int random_point = std::rand() % total_points_ + 1;
+        
+        // Find the rectangle that contains the random point
+        int chosen_rect_index = binarySearch(random_point);
+        const auto& chosen_rect = rects_[chosen_rect_index];
+        
+        // Calculate the position of the random point within the chosen rectangle
+        int x = chosen_rect[0] + std::rand() % (chosen_rect[2] - chosen_rect[0] + 1);
+        int y = chosen_rect[1] + std::rand() % (chosen_rect[3] - chosen_rect[1] + 1);
+        
+        return {x, y};
+    }
+    private:
+    std::vector<std::vector<int>> rects_;
+    int total_points_;
+    std::vector<int> cumulative_points_;
+
+    int binarySearch(int target) {
+        // Binary search to find the rectangle that contains the target point
+        int low = 0, high = cumulative_points_.size() - 1;
+
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            if (cumulative_points_[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+
+        return low;
+    }
+};
