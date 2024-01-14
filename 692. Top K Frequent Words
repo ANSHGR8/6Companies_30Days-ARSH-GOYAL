@@ -1,0 +1,31 @@
+bool compare(pair<int,string> x,pair<int,string> y)
+    {
+        if(x.first!=y.first)
+        return x.first<y.first;
+        
+        return x.second>=y.second;
+    }
+class Solution {
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        int n = words.size();
+        map<string,int> mp;
+        vector<pair<int,string>> v;
+        vector<string> ans;
+
+        for(auto x : words)
+        mp[x]++;
+
+        for(auto x : mp)
+        v.push_back({x.second,x.first});
+
+        sort(v.begin(),v.end(),compare);
+        words.clear();
+        while(k--)
+        {
+            words.push_back(v.back().second);
+            v.pop_back();
+        }
+        return words;
+    }
+};
