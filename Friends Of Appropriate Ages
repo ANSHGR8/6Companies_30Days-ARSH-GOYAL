@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+         int res = 0;
+        vector<int> count(121);
+        for (int age : ages) ++count[age];
+        for (int i = 15; i <= 120; ++i)
+            for (int j = 15; j <= 120; ++j) {
+                if (i * 0.5 + 7 >= j) continue;
+                if (i < j) continue;
+                if (i < 100 && 100 < j) continue;
+                res += count[i] * (count[j] - (i == j));
+            }
+        return res;
+    }
+};
