@@ -1,0 +1,10 @@
+class Solution {
+public:
+    int longestString(int x, int y, int z) {
+        if(x == y) return 4*x + 2*z;
+        int minValue = min(x, y);
+        int len = 4 * minValue; 
+        if(z > 0) len += (4 + 2*(z-1));
+        return len;
+    }
+};
