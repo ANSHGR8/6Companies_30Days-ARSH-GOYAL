@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int maxNumberOfFamilies(int n, vector<vector<int>>& reservedSeats) {
+        int ans=0;
+        map<vector<int>,bool>m;
+        set<int>st;
+
+        for(vector<int> i:reservedSeats){
+            m[i]=true;
+            st.insert(i[0]);
+        }  
+
+        for(auto i:st){
+            
+            bool a=!m[{i,4}] ,b=!m[{i,5}] ,c=!m[{i,6}] ,d=!m[{i,7}] ,e=!m[{i,8}] ,f=!m[{i,9}] ,
+            g=c && d && e && f , h=!m[{i,2}] ,j=!m[{i,3}];
+
+            if(h && j && a && b){
+                ans++;
+                if(g) ans++;
+            }
+            else{
+                if(a && b && c && d) ans++;
+                else{
+                    if(g) ans++;
+                }
+            }
+        }
+        return ans+((n - st.size())*2);
+    }
+};
