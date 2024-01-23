@@ -1,0 +1,16 @@
+class Solution {
+public:
+vector<int> get_pos(string& s, string& sub, int i = 0) {
+        vector<int> res;
+        while( string::npos !=  (i = s.find(sub, i)) ) res.push_back(i++);
+        return res;
+    }
+    vector<int> beautifulIndices(string s, string a, string b, int k) {
+         vector<int> a_in = get_pos(s, a), b_in = get_pos(s, b), res = {};
+        for (auto i = 0, j = 0; i < a_in.size(); ++i) {
+            while (j < b_in.size() && a_in[i] > b_in[j] && abs(a_in[i] - b_in[j]) > k) j++;
+            if (j < b_in.size() && abs(a_in[i] - b_in[j]) <= k) res.push_back(a_in[i]);
+        }
+        return res;
+    }
+};
