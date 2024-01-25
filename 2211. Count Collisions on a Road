@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int countCollisions(string directions) {
+        stack<char> myStack;
+int collisions = 0;
+
+for (int i = 0; i < directions.size(); i++) {
+    if (directions[i] == 'L') {
+        if (myStack.empty())
+            continue;
+
+        if (myStack.top() == 'R') {
+            collisions += 2;
+            myStack.pop();
+
+            while (!myStack.empty()) {
+                if (myStack.top() == 'R')
+                    collisions++;
+
+                myStack.pop();
+            }
+
+            myStack.push('S');
+        } else {
+            collisions++;
+            myStack.pop();
+            myStack.push('S');
+        }
+    } else if (directions[i] == 'R') {
+        myStack.push('R');
+    } else {
+        while (!myStack.empty()) {
+            if (myStack.top() == 'R')
+                collisions++;
+
+            myStack.pop();
+        }
+
+        myStack.push('S');
+    }
+}
+
+return collisions;
+
+    }
+};
